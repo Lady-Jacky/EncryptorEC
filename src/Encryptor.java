@@ -99,4 +99,38 @@ public class Encryptor {
             }
         }
     }
+
+    public String superEncryptMessage(String message, int offset) {
+        String[] words = new String[message.length()];
+        for(int j = 0; j < message.length(); j++) {
+            words[j] = "" + message.charAt(j);
+        }
+        String alphabet = "abcdefghijklmnopqrstuvwxyz";
+        String capAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        for(int i = 0; i < message.length(); i++) {
+            if(alphabet.contains(words[i])) {
+                words[i] = "" + alphabet.charAt(alphabet.indexOf(words[i]) + offset);
+            }
+//            if(capAlphabet.contains(words[i])) {
+//                words[i] = "" + capAlphabet.charAt(offset(capAlphabet.indexOf(words[i]), offset));
+//            }
+        }
+
+        String encrypted = "";
+        for(int l = 0; l < words.length; l++) {
+            encrypted += words[l];
+        }
+        return encrypted;
+    }
+
+    public int offset(int orig, int offsetNum) {
+        int num = orig;
+        if(num > 26) {
+            num = num - 26;
+        }
+        return num;
+    }
+
+
 }
