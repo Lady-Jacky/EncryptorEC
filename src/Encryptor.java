@@ -110,27 +110,60 @@ public class Encryptor {
 
         for(int i = 0; i < message.length(); i++) {
             if(alphabet.contains(words[i])) {
-                words[i] = "" + alphabet.charAt(alphabet.indexOf(words[i]) + offset);
+                    words[i] = "" + alphabet.charAt(offset1(alphabet.indexOf(words[i]), offset));
             }
-//            if(capAlphabet.contains(words[i])) {
-//                words[i] = "" + capAlphabet.charAt(offset(capAlphabet.indexOf(words[i]), offset));
-//            }
+            if(capAlphabet.contains(words[i])) {
+                words[i] = "" + capAlphabet.charAt(offset1(capAlphabet.indexOf(words[i]), offset));
+            }
         }
 
         String encrypted = "";
         for(int l = 0; l < words.length; l++) {
             encrypted += words[l];
         }
-        return encrypted;
+        return encryptMessage(encrypted);
     }
 
-    public int offset(int orig, int offsetNum) {
-        int num = orig;
-        if(num > 26) {
+    public String superDecryptMessage(String message, int offset) {
+        String out= decryptMessage(message);
+        String decrypted = "";
+
+        String[] words = new String[out.length()];
+
+        for(int j = 0; j < out.length(); j++) {
+            words[j] = "" + out.charAt(j);
+        }
+        String alphabet = "abcdefghijklmnopqrstuvwxyz";
+        String capAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        for(int i = 0; i < out.length(); i++) {
+            if(alphabet.contains(words[i])) {
+                words[i] = "" + alphabet.charAt(offset2(alphabet.indexOf(words[i]), offset));
+            }
+            if(capAlphabet.contains(words[i])) {
+                words[i] = "" + capAlphabet.charAt(offset2(capAlphabet.indexOf(words[i]), offset));
+            }
+        }
+
+        for(int l = 0; l < words.length; l++) {
+            decrypted += words[l];
+        }
+        return decrypted;
+    }
+
+    public int offset1(int orig, int offsetNum) {
+        int num = orig + offsetNum;
+        if(num >= 26) {
             num = num - 26;
         }
         return num;
     }
-
+    public int offset2(int orig, int offsetNum) {
+        int num = orig - offsetNum;
+        if(num < 0) {
+            num += 26;
+        }
+        return num;
+    }
 
 }
